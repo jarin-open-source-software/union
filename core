@@ -1,0 +1,91 @@
+// Copyright (c) 2026 Jarin Open Source Foundation
+
+#ifndef UNION_CORE_H
+#define UNION_CORE_H
+
+#include <functional>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+namespace union_sdk {
+
+// Logger interface for SDK internal diagnostics.
+class ILogger {
+public:
+    virtual ~ILogger() = default;
+    virtual void logInfo(const std::string& message) = 0;
+    virtual void logWarn(const std::string& message) = 0;
+    virtual void logError(const std::string& message) = 0;
+};
+
+// Simple console logger implementation.
+class ConsoleLogger : public ILogger {
+public:
+    void logInfo(const std::string& message) override;
+    void logWarn(const std::string& message) override;
+    void logError(const std::string& message) override;
+};
+
+// Shared runtime configuration container.
+class Config {
+public:
+    void set(const std::string& key, const std::string& value);
+    std::string get(const std::string& key, const std::string& defaultValue = {}) const;
+    bool has(const std::string& key) const;
+
+private:
+    std::unordered_map<std::string, std::string> values_;
+};
+
+// Base module interface for extendable SDK components.
+class IModule {
+public:
+    virtual ~IModule() = default;
+    virtual bool initialize() = 0;
+    virtual void shutdown() = 0;
+    virtual std::string name() const = 0;
+};
+
+// Core SDK manager.
+class Core {
+public:
+    static Core& instance();
+
+    bool initialize();
+    void shutdown();
+
+    void setLogger(std::unique_ptr<ILogger> logger);
+    ILogger& logger();
+
+    Config& config();
+
+    template <typename ModuleType, typename... Args>
+    std::shared_ptr<ModuleType> registerModule(Args&&... args) {
+        static_assert(std::is_base_of<IModule, ModuleType>::value, "ModuleType must derive from IModule");
+        auto module = std::make_shared<ModuleType>(std::forward<Args>(args)...);
+        if (module->initialize()) {
+            modules_.push_back(module);
+            return module;
+        }
+        return nullptr;
+    }
+
+private:
+    Core();
+    ~Core();
+
+    Core(const Core&) = delete;
+    Core& operator=(const Core&) = delete;
+
+    std::unique_ptr<ILogger> logger_;
+    Config config_;
+    std::vector<std::shared_ptr<IModule>> modules_;
+    std::mutex mutex_;
+};
+
+} // namespace union_sdk
+
+#endif // UNION_CORE_H
