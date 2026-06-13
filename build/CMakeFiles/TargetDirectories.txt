@@ -1,0 +1,5 @@
+C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/CMakeFiles/union_core.dir
+C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/CMakeFiles/union_core_tests.dir
+C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/CMakeFiles/RUN_TESTS.dir
+C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/CMakeFiles/ZERO_CHECK.dir

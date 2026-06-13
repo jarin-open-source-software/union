@@ -89,3 +89,4 @@ private:
 } // namespace union_sdk
 
 #endif // UNION_CORE_H
+ 

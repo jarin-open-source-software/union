@@ -1,0 +1,18 @@
+Start testing: Jun 13 10:49 Mountain Daylight Time
+----------------------------------------------------------
+1/1 Testing: union_core_tests
+1/1 Test: union_core_tests
+Command: "C:/Users/Gaming PC/Documents/GitHub/New folder/union/build/Debug/union_core_tests.exe"
+Directory: C:/Users/Gaming PC/Documents/GitHub/New folder/union/build
+"union_core_tests" start time: Jun 13 10:49 Mountain Daylight Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"union_core_tests" end time: Jun 13 10:49 Mountain Daylight Time
+"union_core_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Jun 13 10:49 Mountain Daylight Time
